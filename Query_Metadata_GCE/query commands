@@ -1,0 +1,28 @@
+# Query Metadata and output in json
+
+# 1.
+
+# If the query is only for a particular known metadata key then we can use gcloud without loggging into VM
+
+gcloud compute instances describe instance-name-orinstance-id --format='value[](metadata.items.SPECIFIFC_KEY_NAME)'
+
+# The above will return text default format output either text or json
+
+# 2. 
+
+# Login to the VM and use curl to find out the metadata details of key/value pair
+
+# recursive=true will give all the details directories and sub-directories  by default in json format
+curl "http://metadata.google.internal/computeMetadata/v1/instance/disks/?recursive=true" -H "Metadata_Flavor: Google"
+
+# 3.
+
+# For any specific metadata query 
+
+curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/SPECIFIC_KEY_NAME -H "Metadata_Flavor: Google"
+
+
+# 4.
+
+# Another way to get details output of metadata in json format is to use alt=json
+curl "http://metadata.google.internal/computeMetadata/v1/instance/tags/?alt=json" -H "Metadata_Flavor: Google"
